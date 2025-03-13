@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post-Workout Meal Suggester</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      background-color: #fff;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .suggestion {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e7f4e4;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Post-Workout Meal Suggester</h1>
+    <p>Select your workout type to get a meal recommendation.</p>
+    
+    <h2>Workout Type</h2>
+    <select id="workoutType" onchange="suggestFoods()">
+      <option value="" disabled selected>Select your workout type</option>
+      <option value="weightlifting">Weight Lifting</option>
+      <option value="swimming">Swimming</option>
+      <option value="biking">Biking</option>
+      <option value="running">Running</option>
+    </select>
+    
+    <div id="foodSuggestion" class="suggestion" style="display: none;"></div>
+    
+    <h2>Available Ingredients</h2>
+    <div id="ingredientOptions">
+      <h3>Proteins</h3>
+      <input type="checkbox" value="chicken"> Chicken
+      <input type="checkbox" value="tofu"> Tofu
+      <input type="checkbox" value="eggs"> Eggs
+      <input type="checkbox" value="yogurt"> Greek Yogurt
+      <input type="checkbox" value="beans"> Beans
+      <input type="checkbox" value="lentils"> Lentils
+      <input type="checkbox" value="blackBeans"> Black Beans
+      <input type="checkbox" value="salmon"> Salmon
+      
+      <h3>Carbohydrates</h3>
+      <input type="checkbox" value="quinoa"> Quinoa
+      <input type="checkbox" value="rice"> Brown Rice
+      <input type="checkbox" value="oats"> Oats
+      <input type="checkbox" value="banana"> Banana
+      <input type="checkbox" value="berries"> Berries
+      <input type="checkbox" value="sweetPotato"> Sweet Potato
+      <input type="checkbox" value="potatoes"> Potatoes
+      <input type="checkbox" value="wholeGrainBread"> Whole Grain Bread
+      
+      <h3>Fats</h3>
+      <input type="checkbox" value="peanutButter"> Peanut Butter
+      <input type="checkbox" value="avocado"> Avocado
+      <input type="checkbox" value="almonds"> Almonds
+      <input type="checkbox" value="walnuts"> Walnuts
+      <input type="checkbox" value="pecans"> Pecans
+      
+      <h3>Vegetables & Others</h3>
+      <input type="checkbox" value="spinach"> Spinach
+      <input type="checkbox" value="broccoli"> Broccoli
+      <input type="checkbox" value="lettuce"> Lettuce
+      <input type="checkbox" value="tomatoes"> Tomatoes
+      <input type="checkbox" value="fetaCheese"> Feta Cheese
+      <input type="checkbox" value="apples"> Apples
+    </div>
+    
+    <button onclick="getMealSuggestion()">Get Meal Suggestion</button>
+    <div id="result" class="suggestion" style="display: none;"></div>
+  </div>
+
+  <script>
+    function suggestFoods() {
+      var workout = document.getElementById('workoutType').value;
+      var foodSuggestion = document.getElementById('foodSuggestion');
+      var suggestions = {
+        weightlifting: "You need high protein and complex carbs for muscle repair. Consider chicken, lentils, quinoa, and spinach.",
+        swimming: "Replenish energy and hydrate with proteins and healthy fats like salmon, avocado, and potatoes.",
+        biking: "Replenish glycogen with carbs and protein. Good choices are whole grain bread, eggs, and bananas.",
+        running: "Rebuild muscle with protein and quick-digesting carbs like sweet potatoes, beans, and feta cheese."
+      };
+      
+      foodSuggestion.innerHTML = `<strong>Recommended Nutrients:</strong> ${suggestions[workout]}`;
+      foodSuggestion.style.display = "block";
+    }
+    
+    function getMealSuggestion() {
+      var selectedIngredients = Array.from(document.querySelectorAll('#ingredientOptions input:checked')).map(el => el.value);
+      var resultDiv = document.getElementById('result');
+      
+      var mealRecipe = `Using your selected ingredients: ${selectedIngredients.join(", ")}, try making a simple dish like a stir-fry, salad, wrap, or smoothie.`;
+      
+      resultDiv.innerHTML = `<strong>Suggested Meal:</strong> ${mealRecipe}`;
+      resultDiv.style.display = "block";
+    }
+  </script>
+</body>
+</html>
